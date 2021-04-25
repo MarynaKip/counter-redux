@@ -1,13 +1,23 @@
 import { connect } from "react-redux";
+// import {
+//   onIncrement,
+//   onDecrement,
+//   onChangeStep,
+// } from "./redux/counter/actions";
+import * as actions from "./redux/counter/actions";
 
 const Counter = ({ step, value, onChangeStep, onIncrement, onDecrement }) => {
+  const handleChangeStep = (e) => onChangeStep(Number(e.target.value));
+  const handleIncrement = () => onIncrement(step);
+  const handleDecrement = () => onDecrement(step);
+
   return (
     <div>
       <h4>Counter</h4>
 
       <label>
         <span>step</span>
-        <select value={step} onChange={onChangeStep}>
+        <select value={step} onChange={handleChangeStep}>
           <option value="1">1</option>
           <option value="5">5</option>
           <option value="10">10</option>
@@ -16,22 +26,24 @@ const Counter = ({ step, value, onChangeStep, onIncrement, onDecrement }) => {
         </select>
       </label>
       <div>
-        <button onClick={onDecrement}>-</button>
+        <button onClick={handleDecrement}>-</button>
         <p> {value}</p>
-        <button onClick={onIncrement}>+</button>
+        <button onClick={handleIncrement}>+</button>
       </div>
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({
-  value: state,
-  step: 1,
+const mapStateToProps = ({ counter: { value, step } }) => ({
+  value,
+  step,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  onIncrement: () => dispatch({ type: "counter/increment" }),
-  onDecrement: () => dispatch({ type: "counter/decrement" }),
-});
+// const mapDispatchToProps = {
+//   onIncrement,
+//   onDecrement,
+//   onChangeStep,
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+// export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+export default connect(mapStateToProps, actions)(Counter);
