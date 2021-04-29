@@ -1,6 +1,6 @@
 const types = {
-  DECREMENT: "counter/decrement",
   INCREMENT: "counter/increment",
+  DECREMENT: "counter/decrement",
   SET_STEP: "counter/set-step",
 };
 
